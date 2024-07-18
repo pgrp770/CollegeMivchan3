@@ -96,18 +96,10 @@ namespace CollegeMivchan3.Dal.Repositories
 
         public bool checkIfExistThisCourse(string courseName, string machzor, string name)
         {
-            string queiry = @"declare @flag bit = 0
-
-                            if exists (select distinct CourseName from Courses c 
-			                            join StudentsInCourses sc on c.ID = sc.CourseID
-			                            join Students s on s.ID = sc.StudentID
-			                            where s.StudentName = @name and c.CourseName=@courseName and c.Machzor=@machzor)
-                            begin
-	                            set @flag = 1;
-                            end";
-            SqlParameter[] foo = [new SqlParameter("@courseName", courseName),
-                new SqlParameter("@machzor", machzor),
-                new SqlParameter("@name", name)];
+            string queiry = @"exec checkIsThisCourseGood  @courseName = @CourseName, @machzor = @Machzor,@name = @Name";
+            SqlParameter[] foo = [new SqlParameter("@CourseName", courseName),
+                new SqlParameter("@Machzor", machzor),
+                new SqlParameter("@Name", name)];
             bool ok = (bool)dbContext.ExecuteScalar(queiry, foo);
             return ok;
 
