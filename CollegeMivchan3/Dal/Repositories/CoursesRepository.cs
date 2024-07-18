@@ -110,6 +110,7 @@ namespace CollegeMivchan3.Dal.Repositories
                 new SqlParameter("@name", name)];
             bool ok = (bool)dbContext.ExecuteScalar(queiry, foo);
             return ok;
+
         }
 
     }
